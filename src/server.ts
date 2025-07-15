@@ -1,18 +1,15 @@
 import fastify from 'fastify'
-import { knex } from './database'
 import { env } from './env'
+import { usersRoutes } from './routes/users'
 
 const app = fastify()
 
-app.get('/hello', async () => {
-  const users = await knex('users').where('id', 1).select('*')
-  return users
-})
+app.register(usersRoutes)
 
 app
   .listen({
-    port: Number(env.PORT) || 3333,
+    port: env.PORT,
   })
   .then(() => {
-    console.log('Server is running on http://localhost:3333')
+    console.log('HTTP Server Running!')
   })
