@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/PauloStraforini/Daily-Diet-API-#readme",
   "dependencies": {
+    "@fastify/cookie": "^11.0.2",
     "@types/node": "^24.0.13",
     "dotenv": "^17.2.0",
     "fastify": "^5.4.0",
