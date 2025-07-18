@@ -13,7 +13,12 @@ export async function checkSessionIdExists(
 
   const user = await knex('users').where({ session_id: sessionId }).first()
 
-  if (!user) {
+  if (!user || !user.session_id) {
     return reply.status(401).send({ error: 'Unauthorized' })
+  }
+
+  request.user = {
+    ...user,
+    session_id: user.session_id as string,
   }
 }
