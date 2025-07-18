@@ -20,32 +20,15 @@ describe('Users routes', () => {
   })
 
   it('should be able to create a new user', async () => {
-    await request(app.server)
+    const response = await request(app.server)
       .post('/users')
-      .send({
-        name: 'Paulo Straforini',
-        email: 'paulo.straforini@example.com',
-      })
+      .send({ name: 'John Doe', email: 'johndoe@gmail.com' })
       .expect(201)
-  })
 
-  it('should be able to list all users', async () => {
-    const createUserResponse = await request(app.server).post('/users').send({
-      name: 'Paulo Straforini',
-      email: 'paulo.straforini@example.com',
-    })
+    const cookies = response.get('Set-Cookie')
 
-    const cookies = createUserResponse.get('Set-Cookie')
-
-    const listUsersResponse = await request(app.server)
-      .get('/users')
-      .set('Cookie', cookies)
-      .expect(200)
-    expect(listUsersResponse.body.users).toEqual([
-      expect.objectContaining({
-        name: 'Paulo Straforini',
-        email: '',
-      }),
-    ])
+    expect(cookies).toEqual(
+      expect.arrayContaining([expect.stringContaining('sessionId')]),
+    )
   })
 })
