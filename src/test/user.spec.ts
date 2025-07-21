@@ -1,11 +1,9 @@
-import { beforeAll, afterAll, describe, it, beforeEach, expect } from 'vitest'
-import { execSync } from 'node:child_process'
-import request from 'supertest'
 import { app } from '../app'
+import { execSync } from 'child_process'
+import request from 'supertest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 describe('Users routes', () => {
-  execSync('npm run knex migrate:latest')
-
   beforeAll(async () => {
     await app.ready()
   })
